@@ -11,6 +11,54 @@
 
 /* v1.5: mobile-first simplified shopping catalog */
 .shop-simple-head{display:flex;align-items:end;justify-content:space-between;gap:15px;flex-wrap:wrap}.shop-simple-head h3{font-size:1.4rem}.shop-simple-head>div:last-child{min-width:145px}.shop-mini{color:#64748b;font-size:.8rem;margin:0}.simple-shop-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0 12px}.simple-shop-tabs button{padding:12px 5px;background:#e9f0f3;color:#24495a;font-size:.88rem}.simple-shop-tabs button.selected{background:#146c73;color:white}.shop-category{border:1px solid #e0e8ed;border-radius:15px;background:#fff;margin:9px 0;overflow:hidden}.shop-category>summary{display:flex;gap:12px;align-items:center;padding:13px;cursor:pointer;list-style:none}.shop-category>summary::-webkit-details-marker{display:none}.shop-category>summary .shop-muted{display:block}.cat-photo{font-size:26px;background:#ecf6f0;border-radius:12px;display:grid;place-items:center;width:49px;height:49px}.cat-chevron{font-size:25px;color:#71919d;transition:transform .2s}.shop-category[open] .cat-chevron{transform:rotate(180deg)}.shop-products{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:8px;padding:10px;background:#f7fafb}.shop-product-tap{background:#fff!important;color:#17344a!important;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid #e3e9ed;padding:9px;border-radius:13px;min-width:0}.shop-product-tap:hover{border-color:#16866b}.shop-product-tap small{display:block;color:#748399;font-weight:400;font-size:.78rem}.product-photo{width:55px;height:55px;flex-shrink:0;display:grid;place-items:center;font-size:31px;border-radius:12px;background:linear-gradient(140deg,#e6f5e9,#f8f4e8)}.product-add{color:#14746b;background:#e8f5f0;border-radius:50%;width:27px;height:27px;display:grid;place-items:center;font-size:19px}.shop-own-product{margin:13px 0;border-top:1px solid #e2e9ec;padding-top:11px}.shop-own-product>summary{cursor:pointer;color:#2f5a67;font-size:.89rem}.shop-list-actions{margin-top:14px}.shop-list-actions>button{flex:1}.shop-list-actions details{flex:1}.shop-list-actions details .shop-flex{margin-top:10px}@media(max-width:600px){.shop-panel{padding:12px}.shop-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.shop-product-tap{flex-direction:column;position:relative;align-items:start}.shop-product-tap .product-add{position:absolute;right:8px;top:8px}.shop-product-tap .grow{width:100%}.simple-shop-tabs button{font-size:.76rem}.shop-simple-head h3{font-size:1.12rem}}
+.shop-quantity{display:block;width:min(100%,180px);margin-top:5px;padding:7px 8px;border-radius:9px;border:1px solid #c8d9de;background:white;color:#234653;font-size:.89rem;min-height:35px}
+
+/* Familien Organizer v1.7 – Einkaufsplaner aus dem Mobile-Design */
+#shoppingView{--s-green:#126c53;--s-pale:#eef6ef;--s-ink:#142e36;color:var(--s-ink);max-width:920px;margin-inline:auto}
+#shoppingView .shop-hero{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 4px 17px;background:linear-gradient(125deg,#fff 50%,#edf6ef);border-radius:19px}
+#shoppingView .shop-hero h3{font-size:clamp(1.45rem,4vw,2rem);margin:4px 0;color:var(--s-ink)}
+#shoppingView .shop-hero-graphic{font-size:57px;filter:drop-shadow(0 5px 5px #244b301a)}
+#shoppingView .shop-store-row{margin:6px 0 13px;display:flex;align-items:center;gap:10px;background:white;border:1px solid #dce8e2;border-radius:16px;padding:5px 13px;box-shadow:0 5px 20px #0d453609}
+#shoppingView .shop-store-row select{border:0;padding:10px 5px;font-weight:750;min-height:44px;color:#183d36;background:transparent}
+#shoppingView .simple-shop-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:16px;background:#e9f0ec;margin:14px 0}
+#shoppingView .simple-shop-tabs button{border-radius:12px;padding:13px 7px;background:transparent;color:#37584d;font-weight:750}
+#shoppingView .simple-shop-tabs button.selected{background:white;color:#126c53;box-shadow:0 3px 12px #1a4e331a}
+#shoppingView .shop-panel{background:transparent;border:0;padding:0;margin:0}
+#shoppingView .shop-search{border:1px solid #dce7e1;border-radius:15px;padding:13px 14px;background:#f8fbf9;min-height:48px;font-size:1rem;margin:8px 0 12px}
+#shoppingView .shop-category{border:1px solid #e2eae3;border-radius:17px;box-shadow:0 3px 12px #1c452508;overflow:hidden;margin:10px 0;background:#fff}
+#shoppingView .shop-category[open]{background:#eef7f0;border-color:#d7e9da}
+#shoppingView .shop-category>summary{min-height:68px;padding:11px 14px;gap:12px}
+#shoppingView .cat-photo{font-size:29px;width:45px;height:45px;background:#f0f7f0}
+#shoppingView .shop-products{grid-template-columns:repeat(2,minmax(0,1fr));padding:7px 9px 12px;gap:8px;background:transparent}
+#shoppingView .shop-product-tap{min-height:147px;background:white!important;border:1px solid #e3eae4;border-radius:14px;padding:12px!important;display:flex;flex-direction:column;align-items:stretch;gap:6px;position:relative;box-shadow:0 3px 10px #29472d09}
+#shoppingView .shop-product-tap .product-photo{font-size:44px;width:100%;height:69px;background:transparent;border-radius:0}
+#shoppingView .shop-product-tap b{font-size:.98rem;display:block;padding-right:29px;line-height:1.2}
+#shoppingView .shop-product-tap small{font-size:.79rem}
+#shoppingView .product-add{position:absolute;right:10px;bottom:10px;width:34px;height:34px;background:#e5f4ea;font-size:24px;color:#137650}
+#shoppingView .shop-product-tap:active{transform:scale(.985)}
+#shoppingView .shop-list-top{display:flex;justify-content:space-between;align-items:start;gap:10px;margin:12px 0 16px}
+#shoppingView .shop-list-top h3{font-size:1.3rem;margin:0 0 4px}
+#shoppingView .shop-item{display:grid;grid-template-columns:29px 52px minmax(0,1fr) auto;gap:9px;align-items:center;margin:7px 0;padding:12px 10px;border:1px solid #e5ece8;border-radius:15px;background:white;box-shadow:0 3px 12px #1b4b320b;min-height:82px}
+#shoppingView .shop-item.is-done{background:#f0f6f2;opacity:.78}
+#shoppingView .shop-item input[type=checkbox]{width:25px;height:25px;accent-color:#258460;margin:0}
+#shoppingView .shop-item .product-photo{width:46px;height:49px;font-size:29px}
+#shoppingView .shop-item .shopping-label{min-width:0}
+#shoppingView .shop-item strong{font-size:.98rem;display:block;overflow-wrap:anywhere}
+#shoppingView .shop-item .shop-quantity{font-size:.83rem;padding:4px 7px;width:100%;min-height:32px;border:0;background:#f4f8f5;margin-top:4px}
+#shoppingView .shop-stepper{display:flex;align-items:center;background:#edf4ef;border-radius:11px;padding:3px;gap:3px;white-space:nowrap}
+#shoppingView .shop-stepper button{width:34px;height:36px;border-radius:9px;background:transparent;color:#116c51;padding:3px;font-size:22px;line-height:1}
+#shoppingView .shop-stepper b{min-width:21px;font-variant-numeric:tabular-nums;text-align:center;font-size:.95rem}
+#shoppingView .shop-more{border:1px solid #e0e9e2;border-radius:13px;padding:11px;margin:12px 0}
+#shoppingView .shop-more>summary{cursor:pointer;font-weight:650;color:#366356}
+#shoppingView .shop-muted{color:#60776d}
+#shoppingView .shop-bottom-actions{margin-top:16px;display:flex;align-items:center;gap:10px}
+#shoppingView .shop-bottom-actions button{background:#e9f4ec;color:#176747}
+#shoppingView .shop-bottom-actions .shop-more{flex:1}
+#shoppingView .shop-empty{border:1px dashed #ccded0;border-radius:16px;background:#f9fcf9;padding:25px 13px;text-align:center;color:#668274}
+#shoppingView .shop-saved-list{padding:12px;background:#fff;border:1px solid #e1e9e4;border-radius:14px;margin-top:10px}
+#shoppingView .shop-dock{position:sticky;bottom:10px;display:flex;justify-content:center;z-index:4;pointer-events:none;margin-top:10px}
+#shoppingView .shop-dock button{pointer-events:auto;box-shadow:0 6px 24px #173e2c33;background:#146f54;color:white;border-radius:999px;padding:13px 22px;min-height:48px}
+@media(max-width:560px){#shoppingView .shop-hero-graphic{font-size:44px}#shoppingView .shop-product-tap{min-height:151px}#shoppingView .shop-item{grid-template-columns:25px 39px minmax(0,1fr) auto;gap:6px;padding:10px 7px}#shoppingView .shop-item .product-photo{font-size:26px;width:38px}#shoppingView .shop-stepper button{width:27px;height:33px}#shoppingView .shop-stepper b{min-width:17px}#shoppingView .shop-quantity{font-size:.76rem}#shoppingView .shop-hero h3{font-size:1.4rem}}
 </style></head><body><main class="app"><div class="top"><div><div class="brand">🧭 Familien Organizer</div><div class="muted small">Unser Leben. Unsere Ziele. Unsere Zukunft.</div></div><button id="logout" class="btn2 hidden">Abmelden</button></div><div id="message" role="status"></div>
 <section id="setup" class="card auth"><h2>Supabase verbinden</h2><p class="muted">Trage die Projektadresse und den <b>Publishable Key</b> in der Datei <code>config.js</code> ein und lade alle Dateien auf GitHub Pages hoch. Niemals einen Secret- oder Service-Role-Key eintragen.</p></section>
 <section id="auth" class="card auth hidden"><h2>Willkommen zurück</h2><p class="muted">Jede Person verwendet ihre eigene E-Mail-Adresse.</p><form id="authForm"><label>E-Mail</label><input id="email" type="email" autocomplete="email" required><label>Passwort</label><input id="password" type="password" minlength="8" autocomplete="current-password" required><div class="row" style="margin-top:15px"><button type="submit">Anmelden</button><button type="button" class="btn2" id="signup">Neues Konto erstellen</button><button type="button" class="btn2" id="reset">Passwort vergessen</button></div></form></section>
@@ -263,11 +311,11 @@ $('projectView').onchange=async e=>{const b=e.target.closest('[data-pit-toggle]'
 const SHOPS=['ALDI','Lidl','Migros','Coop','Andere'];
 // Generische Vorschläge. KEIN offizieller Händlerkatalog und KEINE Echtzeitpreise.
 const SUGGESTIONS={
- 'Obst & Gemüse':[['Äpfel','1 kg'],['Bananen','1 kg'],['Karotten','1 kg'],['Tomaten','500 g'],['Gurken','1 Stück'],['Kartoffeln','2 kg'],['Zwiebeln','1 kg'],['Salat','1 Stück'],['Paprika','3 Stück'],['Broccoli','1 Stück']],
- 'Milch & Kühlung':[['Milch','1 Liter'],['Butter','250 g'],['Eier','10 Stück'],['Naturjoghurt','500 g'],['Quark','500 g'],['Käse','200 g'],['Rahm','2 dl'],['Mozzarella','2 Stück']],
+ 'Obst & Gemüse':[['Äpfel','4 Stück'],['Bananen','5 Stück'],['Karotten','4 Stück'],['Tomaten','4 Stück'],['Gurken','1 Stück'],['Kartoffeln','1 kg'],['Zwiebeln','3 Stück'],['Salat','1 Kopf'],['Paprika','3 Stück'],['Broccoli','1 Stück']],
+ 'Milch & Kühlung':[['Milch','1 l'],['Butter','250 g'],['Eier','10 Stück'],['Naturjoghurt','500 g'],['Quark','500 g'],['Käse','200 g'],['Rahm','2 dl'],['Mozzarella','1 Packung']],
  'Brot & Backen':[['Brot','1 Stück'],['Toast','1 Packung'],['Gipfeli','4 Stück'],['Mehl','1 kg'],['Zucker','1 kg']],
  'Vorrat':[['Reis','1 kg'],['Spaghetti','500 g'],['Penne','500 g'],['Haferflocken','500 g'],['Tomatensauce','1 Glas'],['Olivenöl','500 ml'],['Salz','1 Packung'],['Linsen','500 g']],
- 'Getränke':[['Mineralwasser','6 × 1.5 Liter'],['Kaffee','500 g'],['Tee','1 Packung'],['Orangensaft','1 Liter']],
+ 'Getränke':[['Mineralwasser','6 × 1,5 l'],['Kaffee','500 g'],['Tee','1 Packung'],['Orangensaft','1 l']],
  'Haushalt':[['WC-Papier','1 Packung'],['Waschmittel','1 Flasche'],['Geschirrspülmittel','1 Flasche'],['Küchenpapier','1 Packung'],['Müllsäcke','1 Rolle']],
  'Diverses':[['Shampoo','1 Flasche'],['Zahnpasta','1 Tube'],['Seife','1 Stück']]
 };
@@ -285,7 +333,7 @@ async function loadShoppingData(refresh=true){
   for(const res of [l,i,c])if(res.error)throw res.error;
   shoppingLists=l.data||[];shoppingListItems=i.data||[];catalogProducts=c.data||[];
   const valid=shoppingLists.some(x=>x.id===shoppingSelectedId&&!x.is_template);
-  if(!valid)shoppingSelectedId=shoppingLists.find(x=>!x.is_template)?.id||null;
+  if(!valid)shoppingSelectedId=shoppingLists.find(x=>!x.is_template&&x.store===shoppingStore)?.id||null;
   if(refresh&&active==='shopping'&&!shoppingEditing())renderShopping();
  }catch(e){err(e);}finally{shoppingLoading=false;}
 }
@@ -299,32 +347,86 @@ const CATEGORY_ICONS={
  'Obst & Gemüse':'🥕','Milch & Kühlung':'🥛','Brot & Backen':'🥐','Vorrat':'🍝','Getränke':'🧃','Haushalt':'🧽','Diverses':'🧴','Eigene Produkte':'🛍️'
 };
 const PHOTO_EMOJI={Milch:'🥛',Butter:'🧈',Eier:'🥚',Naturjoghurt:'🥣',Käse:'🧀',Mozzarella:'🧀',Äpfel:'🍎',Bananen:'🍌',Tomaten:'🍅',Karotten:'🥕',Gurken:'🥒',Kartoffeln:'🥔',Zwiebeln:'🧅',Salat:'🥬',Paprika:'🫑',Broccoli:'🥦',Brot:'🍞',Toast:'🍞',Gipfeli:'🥐',Reis:'🍚',Spaghetti:'🍝',Penne:'🍝',Kaffee:'☕',Tee:'🍵',Mineralwasser:'💧',Orangensaft:'🍊',Zahnpasta:'🪥',Seife:'🧼',Shampoo:'🧴',Waschmittel:'🧺',Haferflocken:'🌾'};
+// Sinnvolle Vorschlagsmengen je Produkt. Die vorhandene Mengen-Spalte in Supabase bleibt unverändert.
+const QUANTITY_OPTIONS={
+ 'Äpfel':['1 Stück','2 Stück','4 Stück','6 Stück','1 kg'],
+ 'Bananen':['1 Stück','2 Stück','3 Stück','5 Stück','1 kg'],
+ 'Karotten':['1 Stück','2 Stück','4 Stück','6 Stück','500 g','1 kg'],
+ 'Tomaten':['1 Stück','2 Stück','4 Stück','6 Stück','500 g'],
+ 'Gurken':['1 Stück','2 Stück','3 Stück'],
+ 'Kartoffeln':['500 g','1 kg','2 kg','3 kg'],
+ 'Zwiebeln':['1 Stück','2 Stück','3 Stück','5 Stück','1 kg'],
+ 'Salat':['1 Kopf','2 Köpfe'],
+ 'Paprika':['1 Stück','2 Stück','3 Stück','4 Stück'],
+ 'Broccoli':['1 Stück','2 Stück'],
+ 'Milch':['1 l','2 × 1 l','3 × 1 l','6 × 1 l'],
+ 'Butter':['100 g','200 g','250 g','2 × 250 g'],
+ 'Eier':['6 Stück','10 Stück','12 Stück','20 Stück'],
+ 'Brot':['1 Stück','2 Stück','3 Stück'],
+ 'Käse':['100 g','200 g','300 g','500 g'],
+ 'Mineralwasser':['1,5 l','6 × 1,5 l','12 × 1,5 l']
+};
+function quantityChoices(name,current){
+ const options=QUANTITY_OPTIONS[name]||[current||'1 Stück','1 Stück','2 Stück','3 Stück','1 Packung','2 Packungen','250 g','500 g','1 kg','1 l'];
+ return [...new Set([current,...options].filter(Boolean))].slice(0,12);
+}
+function quantitySelect(item){
+ const current=item.quantity||'1 Stück';
+ return `<select class="shop-quantity" data-list-quantity="${escap(item.id)}" aria-label="Menge für ${escap(item.name)} ändern">${quantityChoices(item.name,current).map(q=>`<option value="${escap(q)}" ${q===current?'selected':''}>${escap(q)}</option>`).join('')}<option value="__custom__">Andere Menge …</option></select>`;
+}
 let shoppingOpenCategory='Obst & Gemüse';
 function productImage(product){
  // Neutrale Illustrationen als Vorschaubilder. Keine Fotos fremder Händler.
  const pic=PHOTO_EMOJI[product.name]||CATEGORY_ICONS[product.category]||'🛒';
  return `<span class="product-photo" role="img" aria-label="Illustration ${escap(product.name)}">${pic}</span>`;
 }
+function productIcon(name){return PHOTO_EMOJI[name]||'🛍️';}
+function quantityParts(item){
+ const q=(item.quantity||'').trim();
+ let m=q.match(/^(\d+)\s*×\s*(.+)$/);
+ if(m)return {count:Number(m[1]),unit:m[2],mode:'multiple'};
+ m=q.match(/^(\d+)\s*(Stück|Stk|Packungen|Packung|Flaschen|Flasche|Köpfe|Kopf|Liter|l|kg|g|ml|dl)$/i);
+ if(m)return {count:Number(m[1]),unit:m[2],mode:'simple'};
+ m=q.match(/^(\d+(?:[.,]\d+)?)\s*(.+)$/);
+ if(m)return {count:Number(m[1].replace(',','.')),unit:m[2],mode:'simple'};
+ return {count:1,unit:q||'Stück',mode:'fallback'};
+}
+function nextShopQuantity(item,delta){
+ const q=quantityParts(item);
+ if(q.mode==='multiple')return `${Math.max(1,q.count+delta)} × ${q.unit}`;
+ // For weight/volume products, preserve the package size and increase pack count.
+ if(/^(g|kg|ml|dl|l)$/i.test(q.unit)){
+  if(delta>0)return `2 × ${item.quantity||'1 Packung'}`;
+  return item.quantity||'1 Packung';
+ }
+ if(q.count>1||/Stück|Stk|Packung|Flasche|Kopf|Liter/i.test(q.unit))return `${Math.max(1,q.count+delta)} ${q.unit}`;
+ return delta>0?`2 × ${item.quantity||'1 Packung'}`:item.quantity||'1 Packung';
+}
+function itemStepCount(x){return quantityParts(x).count;}
 function renderShopping(){
  const target=$('shoppingView');
- const activeList=shoppingLists.find(x=>x.id===shoppingSelectedId&&!x.is_template);
- const activeItems=shoppingListItems.filter(x=>x.list_id===shoppingSelectedId);
+ const current=shoppingLists.find(x=>x.id===shoppingSelectedId&&!x.is_template);
+ const activeList=current?.store===shoppingStore?current:null;
+ const activeItems=activeList?shoppingListItems.filter(x=>x.list_id===activeList.id):[];
  const done=activeItems.filter(x=>x.checked).length;
- const pct=activeItems.length?Math.round(done/activeItems.length*100):0;
- const tabs=[['catalog','Produkte'],['list',`Einkaufszettel (${activeItems.length})`],['templates','Vorlagen']];
- target.innerHTML=`<div class="shop-simple-head"><div><p class="shop-mini">Euer gemeinsamer Einkaufsplaner</p><h3 style="margin:4px 0">🛒 Einkauf für ${escap(shoppingStore)}</h3></div><div><label for="shopStore" class="shop-mini">Geschäft</label><select id="shopStore">${SHOPS.map(x=>`<option value="${escap(x)}" ${x===shoppingStore?'selected':''}>${escap(x)}</option>`).join('')}</select></div></div>
- <div class="simple-shop-tabs">${tabs.map(([id,label])=>`<button type="button" data-shop-tab="${id}" class="${id===shoppingTab?'selected':''}">${label}</button>`).join('')}</div>
- <div id="shopStatus" role="status" class="muted small" aria-live="polite"></div>
- ${shoppingTab==='catalog'?`<div class="shop-panel"><label for="catalogSearch">Produkt suchen</label><input type="search" id="catalogSearch" value="${escap(shoppingSearch)}" placeholder="🔎 z. B. Milch, Brot oder Eier" autocomplete="off"><p class="shop-muted">Tippe einfach auf ein Produkt. Es wird sofort auf deinen Einkaufszettel gesetzt.</p><div id="catalogResults"></div><details class="shop-own-product"><summary>Eigenes Produkt erfassen</summary><form id="customProductForm" class="shopping-add"><div><label>Produkt</label><input name="name" maxlength="160" placeholder="z. B. Katzenfutter" required></div><div><label>Menge</label><input name="quantity" maxlength="50" placeholder="z. B. 2 Packungen"></div><button>Speichern</button></form></details></div>`:''}
- ${shoppingTab==='list'?`<div class="shop-panel"><div class="row" style="justify-content:space-between"><div><b>${activeList?escap(activeList.name):'Noch kein Einkaufszettel'}</b><div class="shop-muted">${activeList?escap(activeList.store):'Beim ersten Antippen eines Produkts entsteht automatisch ein Einkaufszettel.'}</div></div><button class="btn2" type="button" data-shop-new>Neuer Zettel</button></div><details class="shop-own-product"><summary>Anderen Einkaufszettel öffnen</summary><select id="shopListChoice"><option value="">– Auswählen –</option>${shoppingLists.filter(x=>!x.is_template).map(x=>`<option value="${x.id}" ${x.id===shoppingSelectedId?'selected':''}>${escap(x.name)} (${escap(x.store)})</option>`).join('')}</select></details><div class="shopping-progress"><div style="width:${pct}%"></div></div><p class="shop-muted">${done} von ${activeItems.length} erledigt</p>${activeItems.map(x=>`<div class="shop-item"><input type="checkbox" data-list-toggle="${x.id}" ${x.checked?'checked':''} aria-label="${escap(x.name)} abhaken"><div class="grow"><strong style="${x.checked?'text-decoration:line-through;color:#84929c':''}">${escap(x.name)}</strong><div class="muted small">${escap(x.quantity||'')}</div></div><button type="button" class="btn2" data-list-delete="${x.id}" aria-label="${escap(x.name)} entfernen">✕</button></div>`).join('')||'<p class="shop-muted" style="padding:15px 0">Noch nichts auf dem Zettel. Tippe oben auf „Produkte“.</p>'}<div class="row shop-list-actions"><button data-shop-save-template ${!activeList||!activeItems.length?'disabled':''}>♡ Für nächstes Mal speichern</button><details class="shop-own-product"><summary>Weitere Optionen</summary><div class="shop-flex"><button class="btn2" data-shop-clear ${!done?'disabled':''}>Erledigte entfernen</button><button class="danger" data-shop-delete-list ${!activeList?'disabled':''}>Liste löschen</button></div></details></div></div>`:''}
- ${shoppingTab==='templates'?`<div class="shop-panel"><h3>Gespeicherte Einkaufszettel</h3><p class="shop-muted">Mit einem Tipp wiederverwenden – alle Produkte sind dann wieder offen.</p>${shoppingLists.filter(x=>x.is_template).map(x=>`<div class="shop-template"><div class="grow"><b>${escap(x.name)}</b><div class="shop-muted">${escap(x.store)} · ${shoppingListItems.filter(i=>i.list_id===x.id).length} Artikel</div></div><button data-use-template="${x.id}">Starten</button><button class="btn2" data-delete-template="${x.id}" aria-label="Vorlage löschen">✕</button></div>`).join('')||'<p class="shop-muted">Noch keine Vorlage gespeichert.</p>'}</div>`:''}`;
+ const pending=activeItems.length-done;
+ const templates=shoppingLists.filter(x=>x.is_template);
+ target.innerHTML=`<div class="shop-hero"><div><p class="shop-mini">Familien Organizer · gemeinsame Liste</p><h3>🛒 Einkaufen</h3></div><span class="shop-hero-graphic" aria-hidden="true">🛍️🥬</span></div>
+ <div class="shop-store-row"><span aria-hidden="true">🏬</span><select id="shopStore" aria-label="Geschäft auswählen">${SHOPS.map(x=>`<option value="${escap(x)}" ${x===shoppingStore?'selected':''}>${escap(x)}</option>`).join('')}</select></div>
+ <div class="simple-shop-tabs"><button type="button" data-shop-tab="catalog" class="${shoppingTab==='catalog'?'selected':''}">Produkte</button><button type="button" data-shop-tab="list" class="${shoppingTab!=='catalog'?'selected':''}">Einkaufszettel (${activeItems.length})</button></div>
+ <div id="shopStatus" role="status" class="shop-muted" aria-live="polite"></div>
+ ${shoppingTab==='catalog'?`<div class="shop-panel"><input class="shop-search" type="search" id="catalogSearch" aria-label="Produkt suchen" value="${escap(shoppingSearch)}" placeholder="🔎 Produkt suchen …" autocomplete="off"><div id="catalogResults"></div><details class="shop-more"><summary>＋ Eigenes Produkt hinzufügen</summary><form id="customProductForm" class="shopping-add"><div><label>Produkt</label><input name="name" maxlength="160" required placeholder="z. B. Katzenfutter"></div><div><label>Menge</label><input name="quantity" maxlength="50" placeholder="z. B. 2 Packungen"></div><button>Speichern</button></form></details></div><div class="shop-dock"><button type="button" data-shop-tab="list">🧾 Mein Einkaufszettel (${activeItems.length})</button></div>`:''}
+ ${shoppingTab==='list'?`<div class="shop-panel"><div class="shop-list-top"><div><h3>🧾 Mein Einkaufszettel</h3><p class="shop-muted" style="margin:0">${pending} offen · ${done} erledigt · ${escap(shoppingStore)}</p></div><button type="button" class="btn2" data-shop-tab="catalog" aria-label="Weitere Produkte auswählen">＋ Artikel</button></div><div class="shopping-progress"><div style="width:${activeItems.length?Math.round(done/activeItems.length*100):0}%"></div></div>
+ ${activeItems.length?activeItems.map(x=>`<div class="shop-item ${x.checked?'is-done':''}"><input type="checkbox" data-list-toggle="${x.id}" ${x.checked?'checked':''} aria-label="${escap(x.name)} erledigt"><span class="product-photo" aria-hidden="true">${productIcon(x.name)}</span><div class="shopping-label"><strong class="${x.checked?'done':''}">${escap(x.name)}</strong>${quantitySelect(x)}</div><div class="shop-stepper"><button type="button" data-quantity-step="-1" data-quantity-id="${x.id}" aria-label="${escap(x.name)} weniger">−</button><b>${itemStepCount(x)}</b><button type="button" data-quantity-step="1" data-quantity-id="${x.id}" aria-label="${escap(x.name)} mehr">＋</button></div></div>`).join(''):'<div class="shop-empty">🛒<p>Dein Einkaufszettel ist noch leer.</p><button type="button" data-shop-tab="catalog">Produkte auswählen</button></div>'}
+ <div class="shop-bottom-actions"><button type="button" data-shop-save-template ${!activeList||!activeItems.length?'disabled':''}>♧ Als Vorlage speichern</button><details class="shop-more"><summary>Weitere Optionen ⋯</summary><div class="shop-flex"><button type="button" data-shop-new>Neuen Zettel erstellen</button><button type="button" data-shop-clear ${!done?'disabled':''}>Erledigte entfernen</button><button type="button" class="danger" data-shop-delete-list ${!activeList?'disabled':''}>Zettel löschen</button></div><label for="shopListChoice">Anderen Zettel öffnen</label><select id="shopListChoice"><option value="">– Zettel auswählen –</option>${shoppingLists.filter(x=>!x.is_template).map(x=>`<option value="${x.id}" ${x.id===shoppingSelectedId?'selected':''}>${escap(x.name)} (${escap(x.store)})</option>`).join('')}</select></details></div>
+ <details class="shop-more"><summary>Gespeicherte Vorlagen (${templates.length})</summary>${templates.map(x=>`<div class="shop-saved-list"><div><b>${escap(x.name)}</b><p class="shop-muted">${escap(x.store)} · ${shoppingListItems.filter(i=>i.list_id===x.id).length} Artikel</p></div><div class="shop-flex"><button type="button" data-use-template="${x.id}">Als Einkauf starten</button><button type="button" class="btn2" data-delete-template="${x.id}">Löschen</button></div></div>`).join('')||'<p class="shop-muted">Noch keine Vorlagen vorhanden.</p>'}</details></div>`:''}`;
  if(shoppingTab==='catalog')renderCatalogResults();
 }
 function renderCatalogResults(){
  const box=$('catalogResults');if(!box)return;
- const rows=catalogRows(),grouped=Object.groupBy?Object.groupBy(rows,x=>x.category||'Eigene Produkte'):rows.reduce((a,x)=>{(a[x.category||'Eigene Produkte']??=[]).push(x);return a;},{});
+ const rows=catalogRows(),grouped=rows.reduce((a,x)=>{(a[x.category||'Eigene Produkte']??=[]).push(x);return a;},{});
  const query=shoppingSearch.trim();
- box.innerHTML=Object.entries(grouped).map(([category,products])=>`<details class="shop-category" ${query||shoppingOpenCategory===category?'open':''} data-category="${escap(category)}"><summary><span class="cat-photo">${CATEGORY_ICONS[category]||'🛍️'}</span><span class="grow"><b>${escap(category)}</b><span class="shop-muted">${products.length} Produkte</span></span><span class="cat-chevron">⌄</span></summary><div class="shop-products">${products.map(p=>`<button type="button" class="shop-product-tap" data-catalog-add="${escap(String(p.id))}" aria-label="${escap(p.name)} zum Einkaufszettel hinzufügen">${productImage(p)}<span class="grow"><b>${escap(p.name)}</b><small>${escap(p.quantity||'')}</small></span><span class="product-add">＋</span></button>`).join('')}</div></details>`).join('')||'<p class="shop-muted">Keine Produkte gefunden. Du kannst unten ein eigenes Produkt speichern.</p>';
+ box.innerHTML=Object.entries(grouped).map(([category,products])=>`<details class="shop-category" ${query||shoppingOpenCategory===category?'open':''} data-category="${escap(category)}"><summary><span class="cat-photo">${CATEGORY_ICONS[category]||'🛍️'}</span><span class="grow"><b>${escap(category)}</b><span class="shop-muted">${products.length} Produkte</span></span><span class="cat-chevron">⌄</span></summary><div class="shop-products">${products.map(p=>`<button type="button" class="shop-product-tap" data-catalog-add="${escap(String(p.id))}" aria-label="${escap(p.name)} zum Einkaufszettel hinzufügen">${productImage(p)}<span class="grow"><b>${escap(p.name)}</b><small>${escap(p.quantity||'')}</small></span><span class="product-add">＋</span></button>`).join('')}</div></details>`).join('')||'<div class="shop-empty">Keine Produkte gefunden. Du kannst ein eigenes Produkt hinzufügen.</div>';
 }
 function shoppingNotice(text){const e=$('shopStatus');if(e)e.textContent=text;else msg(text);}
 async function shopWrite(task){if(shoppingBusy)return;const y=window.scrollY;shoppingBusy=true;try{await task();shoppingBusy=false;await loadShoppingData(false);renderShopping();window.scrollTo(0,y);}catch(e){shoppingBusy=false;shoppingNotice('Fehler: '+(e.message||String(e)));}finally{shoppingBusy=false;}}
@@ -333,8 +435,21 @@ async function insertListItems(listId,arr){if(!arr.length)return;const rows=arr.
 $('shoppingView').addEventListener('input',e=>{if(e.target.id==='catalogSearch'){shoppingSearch=e.target.value;renderCatalogResults();}});
 $('shoppingView').addEventListener('change',async e=>{
  const t=e.target;
- if(t.id==='shopStore'){shoppingStore=t.value;shoppingSearch='';shoppingTab='catalog';renderShopping();return;}
+ if(t.id==='shopStore'){shoppingStore=t.value;shoppingSelectedId=shoppingLists.find(x=>!x.is_template&&x.store===shoppingStore)?.id||null;shoppingSearch='';shoppingTab='catalog';renderShopping();return;}
  if(t.id==='shopListChoice'){shoppingSelectedId=t.value||null;const l=shoppingLists.find(x=>x.id===shoppingSelectedId);if(l)shoppingStore=l.store;shoppingTab='list';renderShopping();return;}
+ if(t.matches('[data-list-quantity]')){
+  const item=shoppingListItems.find(x=>x.id===t.dataset.listQuantity);if(!item)return;
+  let quantity=t.value;
+  if(quantity==='__custom__'){
+    const input=prompt('Gewünschte Menge (z. B. 750 g oder 3 Stück):',item.quantity||'1 Stück');
+    if(input===null){t.value=item.quantity;return;}
+    quantity=input.trim();
+    if(!quantity||quantity.length>50){alert('Bitte eine Menge mit maximal 50 Zeichen eingeben.');t.value=item.quantity;return;}
+  }
+  if(quantity===item.quantity)return;
+  await shopWrite(async()=>{const{data,error}=await sb.from('shopping_list_items').update({quantity}).eq('id',item.id).eq('household_id',home.id).select('id');if(error)throw error;if(!data?.length)throw Error('Menge konnte nicht gespeichert werden.');});
+  return;
+ }
  if(t.matches('[data-list-toggle]')){const old=shoppingListItems.find(x=>x.id===t.dataset.listToggle);if(!old)return;const checked=t.checked;await shopWrite(async()=>{const{data,error}=await sb.from('shopping_list_items').update({checked}).eq('id',old.id).eq('household_id',home.id).select('id');if(error)throw error;if(!data?.length)throw Error('Speichern nicht bestätigt.');});}
 });
 $('shoppingView').addEventListener('submit',async e=>{
@@ -345,8 +460,9 @@ $('shoppingView').addEventListener('toggle',e=>{if(e.target.matches?.('details[d
 $('shoppingView').addEventListener('click',async e=>{
  const t=e.target.closest('button');if(!t||shoppingBusy)return;
  if(t.dataset.shopTab){shoppingTab=t.dataset.shopTab;renderShopping();return;}
+ if(t.dataset.quantityStep){const item=shoppingListItems.find(x=>x.id===t.dataset.quantityId);if(!item)return;const quantity=nextShopQuantity(item,Number(t.dataset.quantityStep));if(quantity===item.quantity)return;await shopWrite(async()=>{const{data,error}=await sb.from('shopping_list_items').update({quantity}).eq('id',item.id).eq('household_id',home.id).select('id');if(error)throw error;if(!data?.length)throw Error('Menge konnte nicht geändert werden.');});return;}
  if(t.hasAttribute('data-shop-new')){const name=prompt('Name für den Einkaufszettel:',`Einkauf ${shoppingStore}`);if(!name?.trim())return;await shopWrite(async()=>{shoppingSelectedId=await insertList(name.trim().slice(0,120),shoppingStore);shoppingTab='catalog';});return;}
- if(t.dataset.catalogAdd){const product=catalogRows().find(x=>String(x.id)===t.dataset.catalogAdd);if(!product)return;await shopWrite(async()=>{if(!shoppingSelectedId)shoppingSelectedId=await insertList(('Einkauf '+shoppingStore).slice(0,120),shoppingStore);const selected=shoppingListItems.filter(x=>x.list_id===shoppingSelectedId).some(x=>x.name===product.name);if(!selected)await insertListItems(shoppingSelectedId,[{name:product.name,quantity:product.quantity}]);});shoppingTab='catalog';shoppingNotice(product.name+' ist auf dem Einkaufszettel.');return;}
+ if(t.dataset.catalogAdd){const product=catalogRows().find(x=>String(x.id)===t.dataset.catalogAdd);if(!product)return;await shopWrite(async()=>{if(!shoppingLists.some(x=>x.id===shoppingSelectedId&&!x.is_template&&x.store===shoppingStore))shoppingSelectedId=shoppingLists.find(x=>!x.is_template&&x.store===shoppingStore)?.id||null;if(!shoppingSelectedId)shoppingSelectedId=await insertList(('Einkauf '+shoppingStore).slice(0,120),shoppingStore);const selected=shoppingListItems.find(x=>x.list_id===shoppingSelectedId&&x.name===product.name);if(!selected)await insertListItems(shoppingSelectedId,[{name:product.name,quantity:product.quantity}]);else {const quantity=nextShopQuantity(selected,1);const{error}=await sb.from('shopping_list_items').update({quantity,checked:false}).eq('id',selected.id).eq('household_id',home.id);if(error)throw error;}});shoppingTab='catalog';shoppingNotice(product.name+' ist auf dem Einkaufszettel.');return;}
  if(t.dataset.listDelete){const x=shoppingListItems.find(x=>x.id===t.dataset.listDelete);if(!x)return;await shopWrite(async()=>{const{data,error}=await sb.from('shopping_list_items').delete().eq('id',x.id).eq('household_id',home.id).select('id');if(error)throw error;if(!data?.length)throw Error('Löschen nicht bestätigt.');});return;}
  if(t.hasAttribute('data-shop-clear')){const list=shoppingListItems.filter(x=>x.list_id===shoppingSelectedId&&x.checked);if(!list.length||!confirm(`${list.length} erledigte Artikel löschen?`))return;await shopWrite(async()=>{const{error}=await sb.from('shopping_list_items').delete().eq('list_id',shoppingSelectedId).eq('household_id',home.id).eq('checked',true);if(error)throw error;});return;}
  if(t.hasAttribute('data-shop-save-template')){const l=shoppingLists.find(x=>x.id===shoppingSelectedId);if(!l)return;const name=prompt('Name der gespeicherten Vorlage:',l.name);if(!name?.trim())return;const parts=shoppingListItems.filter(x=>x.list_id===l.id);await shopWrite(async()=>{const id=await insertList(name.trim().slice(0,120),l.store,true);await insertListItems(id,parts);shoppingTab='templates';});return;}
