@@ -113,6 +113,7 @@ input,select,textarea{border-radius:12px;border-color:#dcded5;background:#fffefa
 @media(max-width:370px){.brand{font-size:1.12rem}.brand-subtitle{font-size:.69rem}.tabs .nav-main{font-size:.65rem}.tabs .nav-icon{font-size:1.33rem}.budget-summary{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 
+.nav-more-panel[hidden]{display:none!important}.nav-more>.nav-main[aria-expanded="true"]{background:var(--accent-light);color:#315a45}.nav-more>.nav-main{touch-action:manipulation}
 </style></head><body><main class="app"><div class="top"><div><div class="brand"><span class="brand-mark" aria-hidden="true">⌂</span> Familien Organizer</div><div class="muted small brand-subtitle">Unser Leben. Unsere Ziele. Unsere Zukunft.</div></div><button id="logout" class="btn2 hidden">Abmelden</button></div><div id="message" role="status"></div>
 <section id="setup" class="card auth"><h2>Supabase verbinden</h2><p class="muted">Trage die Projektadresse und den <b>Publishable Key</b> in der Datei <code>config.js</code> ein und lade alle Dateien auf GitHub Pages hoch. Niemals einen Secret- oder Service-Role-Key eintragen.</p></section>
 <section id="auth" class="card auth hidden"><h2>Willkommen zurück</h2><p class="muted">Jede Person verwendet ihre eigene E-Mail-Adresse.</p><form id="authForm"><label>E-Mail</label><input id="email" type="email" autocomplete="email" required><label>Passwort</label><input id="password" type="password" minlength="8" autocomplete="current-password" required><div class="row" style="margin-top:15px"><button type="submit">Anmelden</button><button type="button" class="btn2" id="signup">Neues Konto erstellen</button><button type="button" class="btn2" id="reset">Passwort vergessen</button></div></form></section>
@@ -184,7 +185,34 @@ async function subscribe(){if(subscription){await sb.removeChannel(subscription)
  // Parent-list membership and SQL RLS enforce which rows can be read; secure the channel separately before sensitive deployments.
  shoppingListItemsSubscription=sb.channel('fo-listitems-'+home.id).on('postgres_changes',{event:'*',schema:'public',table:'shopping_list_items'},onShopChange).subscribe();
  catalogSubscription=sb.channel('fo-catalog-'+home.id).on('postgres_changes',{event:'*',schema:'public',table:'shopping_catalog_products',filter:'household_id=eq.'+home.id},onShopChange).subscribe();}
-$('tabs').onclick=e=>{const b=e.target.closest('[data-kind]');if(b){active=b.dataset.kind;render();}};
+// Explicit click-based menu rather than <details>, which can be unreliable in mobile PWAs.
+$('tabs').addEventListener('click',e=>{
+  const toggle=e.target.closest('[data-more-toggle]');
+  if(toggle){
+    e.preventDefault();
+    const panel=$('moreMenuPanel');
+    const opening=panel.hidden;
+    panel.hidden=!opening;
+    toggle.setAttribute('aria-expanded',String(opening));
+    return;
+  }
+  const button=e.target.closest('[data-kind]');
+  if(button){
+    active=button.dataset.kind;
+    render();
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest('.nav-more'))return;
+  const menu=$('moreMenuPanel'),toggle=document.querySelector('[data-more-toggle]');
+  if(menu&&!menu.hidden){menu.hidden=true;toggle?.setAttribute('aria-expanded','false');}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    const menu=$('moreMenuPanel'),toggle=document.querySelector('[data-more-toggle]');
+    if(menu&&!menu.hidden){menu.hidden=true;toggle?.setAttribute('aria-expanded','false');toggle?.focus();}
+  }
+});
 function render(){display('householdOverview',active==='household');display('householdMembersOverview',active==='household');display('sectionCard',active!=='household');display('addBtn',active!=='shopping'&&active!=='household');display('calendarView',active==='event');display('projectView',active==='project');display('budgetView',active==='finance');display('shoppingView',active==='shopping');display('entries',active!=='event'&&active!=='project'&&active!=='finance'&&active!=='shopping'&&active!=='household');if(active==='event')renderCalendar();if(active==='project')renderProjects();if(active==='finance')renderBudget();if(active==='shopping')renderShopping();let nav=$('tabs');
 const navIcons={event:'▦',shopping:'▤',finance:'◉',asset:'◈',task:'✓',project:'▧',note:'✎',household:'♡'};
 const navMain=['event','shopping','finance'];
@@ -192,7 +220,7 @@ const navMore=['project','task','asset','note','household'];
 const mainLabel={event:'Kalender',shopping:'Einkaufen',finance:'Finanzen'};
 const mainButtons=navMain.map(k=>`<button type="button" data-kind="${k}" class="nav-main ${active===k?'active':''}" ${active===k?'aria-current="page"':''}><span aria-hidden="true" class="nav-icon">${navIcons[k]}</span><span>${mainLabel[k]}</span></button>`).join('');
 const moreButtons=navMore.map(k=>`<button type="button" data-kind="${k}" class="nav-extra ${active===k?'active':''}" ${active===k?'aria-current="page"':''}><span aria-hidden="true">${navIcons[k]}</span> ${escap(kinds[k])}</button>`).join('');
-nav.innerHTML=mainButtons+`<details class="nav-more"><summary class="nav-main ${navMore.includes(active)?'active':''}" aria-label="Weitere Bereiche"><span class="nav-icon" aria-hidden="true">☷</span><span>Mehr</span></summary><div class="nav-more-panel"><div class="nav-more-title">Weitere Bereiche</div>${moreButtons}</div></details>`;
+nav.innerHTML=mainButtons+`<div class="nav-more"><button type="button" data-more-toggle class="nav-main ${navMore.includes(active)?'active':''}" aria-label="Weitere Bereiche öffnen" aria-expanded="false" aria-controls="moreMenuPanel"><span class="nav-icon" aria-hidden="true">☷</span><span>Mehr</span></button><div id="moreMenuPanel" class="nav-more-panel" hidden><div class="nav-more-title">Weitere Bereiche</div>${moreButtons}</div></div>`;
 $('sectionTitle').textContent=active==='shopping'?'Einkaufen':active==='finance'?'Finanzen':kinds[active];
 let visible=items.filter(i=>i.kind===active);$('entries').innerHTML=visible.length?visible.map(i=>`<article class="entry"><div class="row"><div class="grow"><span class="pill">${escap(kinds[i.kind])}</span> <span class="small muted">${i.visibility==='private'?'🔒 Privat':'👥 Gemeinsam'}${i.owner_id===user.id?' · Mein Eintrag':' · Freigegeben'}</span><h3>${escap(i.title)} ${i.done?'✅':''}</h3><div class="small muted">${escap(i.description)}</div>${i.amount!==null?`<div style="margin-top:7px"><b>${euro(i.amount)}</b></div>`:''}${i.event_date?`<div class="small">📅 ${escap(i.event_date)}</div>`:''}</div><div class="row">${i.owner_id===user.id?`<button class="btn2" data-edit="${i.id}">Bearbeiten</button><button class="btn2" data-share="${i.id}">Freigabe</button><button class="danger" data-del="${i.id}">Löschen</button>`:''}</div></div></article>`).join(''):'<p class="muted">Noch keine Einträge in diesem Bereich.</p>';}
 $('addBtn').textContent=active==='event'?'+ Termin':active==='project'?'+ Projekt':active==='finance'?'Finanzposition hinzufügen':active==='shopping'?'Einkaufszettel anzeigen':'+ Eintrag';$('addBtn').onclick=()=>{if(active==='finance'){$('budgetForm').scrollIntoView({behavior:'smooth',block:'center'});$('budgetTitle').focus();}else if(active==='shopping'){shoppingTab='list';renderShopping();$('shoppingView').scrollIntoView({behavior:'smooth',block:'start'});}else {openEditor();if(active==='event'&&selectedCalendarDate)$('entryDate').value=selectedCalendarDate;}};
