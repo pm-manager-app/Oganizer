@@ -80,6 +80,18 @@
 #main .tabs{margin-top:10px}
 #main #stats.hidden,#main #householdOverview.hidden,#main #householdMembersOverview.hidden{display:none!important}
 @media(max-width:600px){#main .tabs{position:sticky;top:0;z-index:10;background:#f3f6fa;padding:8px 0;margin-top:0;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}#main .tabs button{white-space:nowrap;flex:0 0 auto}}
+
+/* Kalender v2.3: kompakte Vorschau auf nächste Termine, nur im Kalenderreiter */
+.upcoming-panel{border:1px solid #cfe4df;background:#f2faf7;border-radius:15px;padding:13px;margin:6px 0 17px}
+.upcoming-heading{display:flex;align-items:center;gap:9px;justify-content:space-between;margin-bottom:8px}
+.upcoming-heading h3{margin:0;color:#163e41;font-size:1.03rem}
+.upcoming-line{width:100%;display:grid;grid-template-columns:105px minmax(0,1fr) 22px;align-items:center;gap:9px;text-align:left;border:0;border-top:1px solid #dcece8;background:transparent;border-radius:0;padding:11px 2px;color:inherit;min-height:54px;cursor:pointer}
+.upcoming-line:hover,.upcoming-line:focus-visible{background:#e5f4ee;outline-offset:2px}
+.upcoming-date{font-size:.79rem;font-weight:750;color:#146c73;line-height:1.35}
+.upcoming-name{font-size:.89rem;font-weight:650;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+.upcoming-arrow{color:#146c73;text-align:right;font-weight:800}
+.upcoming-empty{font-size:.87rem;color:#536b6f;margin:7px 0 2px}
+@media(max-width:500px){.upcoming-panel{padding:11px}.upcoming-line{grid-template-columns:95px minmax(0,1fr) 14px;gap:7px}.upcoming-date{font-size:.75rem}}
 </style></head><body><main class="app"><div class="top"><div><div class="brand">🧭 Familien Organizer</div><div class="muted small">Unser Leben. Unsere Ziele. Unsere Zukunft.</div></div><button id="logout" class="btn2 hidden">Abmelden</button></div><div id="message" role="status"></div>
 <section id="setup" class="card auth"><h2>Supabase verbinden</h2><p class="muted">Trage die Projektadresse und den <b>Publishable Key</b> in der Datei <code>config.js</code> ein und lade alle Dateien auf GitHub Pages hoch. Niemals einen Secret- oder Service-Role-Key eintragen.</p></section>
 <section id="auth" class="card auth hidden"><h2>Willkommen zurück</h2><p class="muted">Jede Person verwendet ihre eigene E-Mail-Adresse.</p><form id="authForm"><label>E-Mail</label><input id="email" type="email" autocomplete="email" required><label>Passwort</label><input id="password" type="password" minlength="8" autocomplete="current-password" required><div class="row" style="margin-top:15px"><button type="submit">Anmelden</button><button type="button" class="btn2" id="signup">Neues Konto erstellen</button><button type="button" class="btn2" id="reset">Passwort vergessen</button></div></form></section>
@@ -287,11 +299,24 @@ function calendarEventFinished(e,now=new Date()){
  return /^\d{2}:\d{2}$/.test(end)&&end<=(pad(now.getHours())+':'+pad(now.getMinutes()));
 }
 const calendarTimeRange=e=>{const start=e.start_time?String(e.start_time).slice(0,5):'';const end=e.end_time?String(e.end_time).slice(0,5):'';return start&&end?start+'–'+end:start?('Ab '+start):end?('Bis '+end):'Ohne Uhrzeit';};
+function upcomingCalendarPanel(now=new Date()){
+ // Alle sichtbaren Termine ab jetzt, über Monatsgrenzen hinweg. Endzeit entscheidet,
+ // ob ein Termin bereits vorbei ist; Termine ohne Endzeit gelten bis Mitternacht.
+ const upcoming=items.filter(i=>i.kind==='event' && i.event_date && !calendarEventFinished(i,now))
+   .sort((a,b)=>a.event_date.localeCompare(b.event_date) || (a.start_time||'99:99').localeCompare(b.start_time||'99:99') || (a.end_time||'').localeCompare(b.end_time||'') || a.title.localeCompare(b.title))
+   .slice(0,5);
+ const rows=upcoming.map(i=>{
+  const date=new Date(i.event_date+'T12:00:00');
+  const label=new Intl.DateTimeFormat('de-CH',{weekday:'short',day:'2-digit',month:'2-digit'}).format(date);
+  return `<button type="button" class="upcoming-line" data-upcoming-date="${escap(i.event_date)}" aria-label="Termin ${escap(i.title)} am ${escap(label)} ansehen"><span class="upcoming-date">${escap(label)}<br>${escap(calendarTimeRange(i))}</span><span class="upcoming-name">${escap(i.title)}</span><span class="upcoming-arrow" aria-hidden="true">›</span></button>`;
+ }).join('');
+ return `<section class="upcoming-panel" aria-label="Nächste Termine"><div class="upcoming-heading"><h3>🕒 Als Nächstes</h3><span class="small muted">${upcoming.length ? 'Kommende Termine' : 'Keine Termine'}</span></div>${rows||'<p class="upcoming-empty">Aktuell stehen keine weiteren Termine an.</p>'}</section>`;
+}
 function renderCalendar(){
  const first=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth(),1),year=first.getFullYear(),month=first.getMonth();
  const offset=(first.getDay()+6)%7,days=new Date(year,month+1,0).getDate(),cells=Math.ceil((offset+days)/7)*7;
  if(!selectedCalendarDate)selectedCalendarDate=dateKey(new Date());
- let html=`<div class="calendar-toolbar"><button class="btn2" data-month="-1">← Vorheriger</button><h3>${escap(new Intl.DateTimeFormat('de-CH',{month:'long',year:'numeric'}).format(first))}</h3><button class="btn2" data-month="1">Nächster →</button></div><p class="cal-helper">Im Monatskalender bleiben auch vergangene Termine sichtbar. Tippe auf einen Tag, um alle Termine dieses Tages anzusehen.</p><div class="calendar-grid">`;
+ let html=upcomingCalendarPanel()+`<div class="calendar-toolbar"><button class="btn2" data-month="-1">← Vorheriger</button><h3>${escap(new Intl.DateTimeFormat('de-CH',{month:'long',year:'numeric'}).format(first))}</h3><button class="btn2" data-month="1">Nächster →</button></div><p class="cal-helper">Im Monatskalender bleiben auch vergangene Termine sichtbar. Tippe auf einen Tag, um alle Termine dieses Tages anzusehen.</p><div class="calendar-grid">`;
  for(const d of ['Mo','Di','Mi','Do','Fr','Sa','So'])html+=`<div class="calendar-dow">${d}</div>`;
  for(let i=0;i<cells;i++){
   const d=new Date(year,month,i-offset+1),k=dateKey(d),other=d.getMonth()!==month,evs=items.filter(x=>x.kind==='event'&&x.event_date===k);
@@ -319,6 +344,7 @@ function renderCalendar(){
 }
 $('calendarView').onclick=async e=>{
  const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.upcomingDate){calendarDayExplicit=true;showPastInDay=false;selectedCalendarDate=b.dataset.upcomingDate;calendarCursor=new Date(Number(selectedCalendarDate.slice(0,4)),Number(selectedCalendarDate.slice(5,7))-1,1);renderCalendar();$('dayDetail')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
  if(b.dataset.calTogglePast){showPastInDay=!showPastInDay;calendarDayExplicit=false;renderCalendar();return;}
  if(b.dataset.month){calendarDayExplicit=true;showPastInDay=false;calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+Number(b.dataset.month),1);selectedCalendarDate=dateKey(new Date(calendarCursor.getFullYear(),calendarCursor.getMonth(),1));renderCalendar();return;}
  if(b.dataset.date){calendarDayExplicit=true;showPastInDay=false;selectedCalendarDate=b.dataset.date;calendarCursor=new Date(Number(b.dataset.date.slice(0,4)),Number(b.dataset.date.slice(5,7))-1,1);renderCalendar();return;}
