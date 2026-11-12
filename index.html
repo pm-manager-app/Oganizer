@@ -114,11 +114,18 @@ input,select,textarea{border-radius:12px;border-color:#dcded5;background:#fffefa
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 
 .nav-more-panel[hidden]{display:none!important}.nav-more>.nav-main[aria-expanded="true"]{background:var(--accent-light);color:#315a45}.nav-more>.nav-main{touch-action:manipulation}
+
+/* Full-size mobile tap targets, no floating dropdown or pointer stacking. */
+.more-section-button{display:flex;align-items:center;gap:16px;width:100%;min-height:66px;margin:8px 0;padding:12px 16px;background:#fffefa;border:1px solid var(--line);border-radius:17px;color:#354b3d;text-align:left;font-size:1.04rem;font-weight:700;box-shadow:0 2px 9px #293b2510;touch-action:manipulation}
+.more-section-button:hover,.more-section-button:active{background:#ebf3e8}
+.more-section-icon{font-size:1.6rem;width:35px;text-align:center}
+.more-section-arrow{margin-left:auto;font-size:1.6rem;color:#758578}
+.tabs>button[data-kind="more"]{touch-action:manipulation;z-index:1}
 </style></head><body><main class="app"><div class="top"><div><div class="brand"><span class="brand-mark" aria-hidden="true">⌂</span> Familien Organizer</div><div class="muted small brand-subtitle">Unser Leben. Unsere Ziele. Unsere Zukunft.</div></div><button id="logout" class="btn2 hidden">Abmelden</button></div><div id="message" role="status"></div>
 <section id="setup" class="card auth"><h2>Supabase verbinden</h2><p class="muted">Trage die Projektadresse und den <b>Publishable Key</b> in der Datei <code>config.js</code> ein und lade alle Dateien auf GitHub Pages hoch. Niemals einen Secret- oder Service-Role-Key eintragen.</p></section>
 <section id="auth" class="card auth hidden"><h2>Willkommen zurück</h2><p class="muted">Jede Person verwendet ihre eigene E-Mail-Adresse.</p><form id="authForm"><label>E-Mail</label><input id="email" type="email" autocomplete="email" required><label>Passwort</label><input id="password" type="password" minlength="8" autocomplete="current-password" required><div class="row" style="margin-top:15px"><button type="submit">Anmelden</button><button type="button" class="btn2" id="signup">Neues Konto erstellen</button><button type="button" class="btn2" id="reset">Passwort vergessen</button></div></form></section>
 <section id="household" class="card auth hidden"><h2>Gemeinsamen Haushalt einrichten</h2><p>Eine Person erstellt den Haushalt. Die andere tritt mit dem Einladungscode bei.</p><form id="createForm"><label>Haushaltsname</label><input id="houseName" maxlength="100" placeholder="Unser Zuhause" required><button style="margin-top:10px">Haushalt erstellen</button></form><hr style="border:0;border-top:1px solid #e4e8ed;margin:22px 0"><form id="joinForm"><label>Einladungscode</label><input id="joinCode" placeholder="UUID-Einladungscode" required><button style="margin-top:10px" class="btn2">Beitreten</button></form></section>
-<section id="main" class="hidden"><div class="card" id="householdOverview"><div class="row"><div class="grow"><h2 id="houseTitle" style="margin:0">Unser Haushalt</h2><p class="muted small" id="membersLabel" style="margin-bottom:0"></p></div><button class="btn2" id="inviteBtn">Einladungscode anzeigen</button><button class="btn2" id="refreshBtn">↻ Aktualisieren</button></div></div><section id="householdMembersOverview" class="card member-card" aria-label="Mitglieder im Haushalt"><div class="member-topline"><div><h2 style="margin:0">👥 Unser Haushalt</h2><p class="muted small" style="margin:4px 0 0">Mitgliedschaft und Aktivitätsstatus</p></div><button class="btn2" id="renameBtn">Meinen Namen ändern</button></div><div id="memberCards" class="member-grid" aria-live="polite"></div><p class="muted small" style="margin-bottom:0">🟢 Online = Aktivitätsmeldung innerhalb der letzten 75 Sekunden. Ein grauer Punkt bedeutet nicht, dass die Person den Haushalt verlassen hat.</p></section><nav class="tabs" id="tabs" aria-label="Hauptnavigation"></nav><div class="card" id="sectionCard"><div class="row"><h2 class="grow" id="sectionTitle">Kalender</h2><button id="addBtn">+ Eintrag</button></div><div id="calendarView" class="hidden"></div><div id="projectView" class="hidden"></div><div id="budgetView" class="hidden"></div><div id="shoppingView" class="hidden"></div><div id="entries"></div></div></section>
+<section id="main" class="hidden"><div class="card" id="householdOverview"><div class="row"><div class="grow"><h2 id="houseTitle" style="margin:0">Unser Haushalt</h2><p class="muted small" id="membersLabel" style="margin-bottom:0"></p></div><button class="btn2" id="inviteBtn">Einladungscode anzeigen</button><button class="btn2" id="refreshBtn">↻ Aktualisieren</button></div></div><section id="householdMembersOverview" class="card member-card" aria-label="Mitglieder im Haushalt"><div class="member-topline"><div><h2 style="margin:0">👥 Unser Haushalt</h2><p class="muted small" style="margin:4px 0 0">Mitgliedschaft und Aktivitätsstatus</p></div><button class="btn2" id="renameBtn">Meinen Namen ändern</button></div><div id="memberCards" class="member-grid" aria-live="polite"></div><p class="muted small" style="margin-bottom:0">🟢 Online = Aktivitätsmeldung innerhalb der letzten 75 Sekunden. Ein grauer Punkt bedeutet nicht, dass die Person den Haushalt verlassen hat.</p></section><nav class="tabs" id="tabs" aria-label="Hauptnavigation"></nav><div class="card" id="sectionCard"><div class="row"><h2 class="grow" id="sectionTitle">Kalender</h2><button id="addBtn">+ Eintrag</button></div><div id="calendarView" class="hidden"></div><div id="projectView" class="hidden"></div><div id="budgetView" class="hidden"></div><div id="shoppingView" class="hidden"></div><div id="entries"></div><div id="moreView" class="hidden" aria-label="Weitere Bereiche"></div></div></section>
 <dialog id="editDialog" style="max-width:500px;width:calc(100% - 20px);border:0;border-radius:18px;padding:23px;box-shadow:0 15px 60px #14233766"><form id="entryForm"><h2 id="dialogTitle">Eintrag erfassen</h2><input type="hidden" id="entryId"><label>Titel</label><input id="entryTitle" maxlength="180" required><label>Beschreibung</label><textarea id="entryDescription"></textarea><div class="fieldgrid"><div><label>Betrag (CHF, optional)</label><input type="number" step="0.01" id="entryAmount"></div><div><label>Datum (optional)</label><input type="date" id="entryDate"></div></div><div id="eventTimeFields" class="hidden"><div class="fieldgrid"><div><label>Beginn (24-Stunden-Format)</label><div class="time-choice"><select id="entryStartHour" aria-label="Beginn Stunde"></select><span>:</span><select id="entryStartMinute" aria-label="Beginn Minute"></select></div></div><div><label>Ende (24-Stunden-Format)</label><div class="time-choice"><select id="entryEndHour" aria-label="Ende Stunde"></select><span>:</span><select id="entryEndMinute" aria-label="Ende Minute"></select></div></div></div><p class="muted small">Für Termine am selben Tag. Das Datum oben kann zum Verschieben geändert werden.</p></div><label>Sichtbarkeit</label><select id="entryVisibility"><option value="shared">Gemeinsam – beide sehen den Eintrag</option><option value="private">Privat – nur ich (Freigabe möglich)</option></select><label class="row"><input id="entryDone" type="checkbox" style="width:auto"> Erledigt</label><div class="row" style="margin-top:16px"><button type="submit">Speichern</button><button type="button" class="btn2" id="cancelDialog">Abbrechen</button><button type="button" class="danger hidden" id="deleteEventButton">Termin löschen</button></div></form></dialog>
 </main><script src="config.js"></script><script type="module">
 import{createClient}from'https://esm.sh/@supabase/supabase-js@2';
@@ -185,43 +192,30 @@ async function subscribe(){if(subscription){await sb.removeChannel(subscription)
  // Parent-list membership and SQL RLS enforce which rows can be read; secure the channel separately before sensitive deployments.
  shoppingListItemsSubscription=sb.channel('fo-listitems-'+home.id).on('postgres_changes',{event:'*',schema:'public',table:'shopping_list_items'},onShopChange).subscribe();
  catalogSubscription=sb.channel('fo-catalog-'+home.id).on('postgres_changes',{event:'*',schema:'public',table:'shopping_catalog_products',filter:'household_id=eq.'+home.id},onShopChange).subscribe();}
-// Explicit click-based menu rather than <details>, which can be unreliable in mobile PWAs.
-$('tabs').addEventListener('click',e=>{
-  const toggle=e.target.closest('[data-more-toggle]');
-  if(toggle){
-    e.preventDefault();
-    const panel=$('moreMenuPanel');
-    const opening=panel.hidden;
-    panel.hidden=!opening;
-    toggle.setAttribute('aria-expanded',String(opening));
-    return;
-  }
-  const button=e.target.closest('[data-kind]');
-  if(button){
-    active=button.dataset.kind;
-    render();
-  }
+// Mobile-safe navigation: "Mehr" is a full page, not an overlay or dropdown.
+$('tabs').addEventListener('click',event=>{
+ const button=event.target.closest('button[data-kind]');
+ if(!button || !$('tabs').contains(button)) return;
+ active=button.dataset.kind;
+ render();
+ if(active==='more') window.scrollTo({top:0,behavior:'auto'});
 });
-document.addEventListener('click',e=>{
-  if(e.target.closest('.nav-more'))return;
-  const menu=$('moreMenuPanel'),toggle=document.querySelector('[data-more-toggle]');
-  if(menu&&!menu.hidden){menu.hidden=true;toggle?.setAttribute('aria-expanded','false');}
+$('moreView').addEventListener('click',event=>{
+ const button=event.target.closest('button[data-open-section]');
+ if(!button) return;
+ active=button.dataset.openSection;
+ render();
+ window.scrollTo({top:0,behavior:'auto'});
 });
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    const menu=$('moreMenuPanel'),toggle=document.querySelector('[data-more-toggle]');
-    if(menu&&!menu.hidden){menu.hidden=true;toggle?.setAttribute('aria-expanded','false');toggle?.focus();}
-  }
-});
-function render(){display('householdOverview',active==='household');display('householdMembersOverview',active==='household');display('sectionCard',active!=='household');display('addBtn',active!=='shopping'&&active!=='household');display('calendarView',active==='event');display('projectView',active==='project');display('budgetView',active==='finance');display('shoppingView',active==='shopping');display('entries',active!=='event'&&active!=='project'&&active!=='finance'&&active!=='shopping'&&active!=='household');if(active==='event')renderCalendar();if(active==='project')renderProjects();if(active==='finance')renderBudget();if(active==='shopping')renderShopping();let nav=$('tabs');
+function render(){display('householdOverview',active==='household');display('householdMembersOverview',active==='household');display('sectionCard',active!=='household');display('addBtn',active!=='shopping'&&active!=='household'&&active!=='more');display('moreView',active==='more');display('calendarView',active==='event');display('projectView',active==='project');display('budgetView',active==='finance');display('shoppingView',active==='shopping');display('entries',active!=='event'&&active!=='project'&&active!=='finance'&&active!=='shopping'&&active!=='household'&&active!=='more');if(active==='event')renderCalendar();if(active==='project')renderProjects();if(active==='finance')renderBudget();if(active==='shopping')renderShopping();let nav=$('tabs');
 const navIcons={event:'▦',shopping:'▤',finance:'◉',asset:'◈',task:'✓',project:'▧',note:'✎',household:'♡'};
 const navMain=['event','shopping','finance'];
 const navMore=['project','task','asset','note','household'];
 const mainLabel={event:'Kalender',shopping:'Einkaufen',finance:'Finanzen'};
 const mainButtons=navMain.map(k=>`<button type="button" data-kind="${k}" class="nav-main ${active===k?'active':''}" ${active===k?'aria-current="page"':''}><span aria-hidden="true" class="nav-icon">${navIcons[k]}</span><span>${mainLabel[k]}</span></button>`).join('');
-const moreButtons=navMore.map(k=>`<button type="button" data-kind="${k}" class="nav-extra ${active===k?'active':''}" ${active===k?'aria-current="page"':''}><span aria-hidden="true">${navIcons[k]}</span> ${escap(kinds[k])}</button>`).join('');
-nav.innerHTML=mainButtons+`<div class="nav-more"><button type="button" data-more-toggle class="nav-main ${navMore.includes(active)?'active':''}" aria-label="Weitere Bereiche öffnen" aria-expanded="false" aria-controls="moreMenuPanel"><span class="nav-icon" aria-hidden="true">☷</span><span>Mehr</span></button><div id="moreMenuPanel" class="nav-more-panel" hidden><div class="nav-more-title">Weitere Bereiche</div>${moreButtons}</div></div>`;
-$('sectionTitle').textContent=active==='shopping'?'Einkaufen':active==='finance'?'Finanzen':kinds[active];
+nav.innerHTML=mainButtons+`<button type="button" data-kind="more" class="nav-main ${active==='more'||navMore.includes(active)?'active':''}" ${active==='more'?'aria-current="page"':''}><span class="nav-icon" aria-hidden="true">☷</span><span>Mehr</span></button>`;
+$('moreView').innerHTML=navMore.map(k=>`<button type="button" class="more-section-button" data-open-section="${k}"><span class="more-section-icon" aria-hidden="true">${navIcons[k]}</span><span>${escap(kinds[k])}</span><span class="more-section-arrow" aria-hidden="true">›</span></button>`).join('');
+$('sectionTitle').textContent=active==='shopping'?'Einkaufen':active==='finance'?'Finanzen':active==='more'?'Weitere Bereiche':kinds[active];
 let visible=items.filter(i=>i.kind===active);$('entries').innerHTML=visible.length?visible.map(i=>`<article class="entry"><div class="row"><div class="grow"><span class="pill">${escap(kinds[i.kind])}</span> <span class="small muted">${i.visibility==='private'?'🔒 Privat':'👥 Gemeinsam'}${i.owner_id===user.id?' · Mein Eintrag':' · Freigegeben'}</span><h3>${escap(i.title)} ${i.done?'✅':''}</h3><div class="small muted">${escap(i.description)}</div>${i.amount!==null?`<div style="margin-top:7px"><b>${euro(i.amount)}</b></div>`:''}${i.event_date?`<div class="small">📅 ${escap(i.event_date)}</div>`:''}</div><div class="row">${i.owner_id===user.id?`<button class="btn2" data-edit="${i.id}">Bearbeiten</button><button class="btn2" data-share="${i.id}">Freigabe</button><button class="danger" data-del="${i.id}">Löschen</button>`:''}</div></div></article>`).join(''):'<p class="muted">Noch keine Einträge in diesem Bereich.</p>';}
 $('addBtn').textContent=active==='event'?'+ Termin':active==='project'?'+ Projekt':active==='finance'?'Finanzposition hinzufügen':active==='shopping'?'Einkaufszettel anzeigen':'+ Eintrag';$('addBtn').onclick=()=>{if(active==='finance'){$('budgetForm').scrollIntoView({behavior:'smooth',block:'center'});$('budgetTitle').focus();}else if(active==='shopping'){shoppingTab='list';renderShopping();$('shoppingView').scrollIntoView({behavior:'smooth',block:'start'});}else {openEditor();if(active==='event'&&selectedCalendarDate)$('entryDate').value=selectedCalendarDate;}};
 function openEditor(i){$('entryForm').reset();const isEvent=(i?.kind||active)==='event';$('entryId').value=i?.id||'';$('dialogTitle').textContent=isEvent?(i?'Termin bearbeiten / verschieben':'Neuen Termin erstellen'):(i?'Eintrag bearbeiten':'Neuen Eintrag erstellen');$('entryTitle').value=i?.title||'';$('entryDescription').value=i?.description||'';$('entryAmount').value=i?.amount??'';$('entryDate').value=i?.event_date||'';$('entryVisibility').value=i?.visibility||'shared';$('entryDone').checked=!!i?.done;display('eventTimeFields',isEvent);setTime('entryStart',i?.start_time||(!i?'18:00':'00:00'));setTime('entryEnd',i?.end_time||(!i?'19:00':'00:00'));$('entryDate').required=isEvent;display('deleteEventButton',!!i&&isEvent&&i.owner_id===user.id);$('editDialog').showModal();}
