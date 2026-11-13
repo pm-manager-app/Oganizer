@@ -123,7 +123,7 @@ input,select,textarea{border-radius:12px;border-color:#dcded5;background:#fffefa
 .tabs>button[data-kind="more"]{touch-action:manipulation;z-index:1}
 
 .task-group{margin:18px 0 25px}.task-group>h3{font-size:1.05rem;margin:0 0 11px;color:#41644f}.task-count{font-size:.72rem;font-weight:500;color:#60756b;background:#e9f0e7;border-radius:999px;padding:3px 8px;margin-left:5px}.task-assignment-card{margin:10px 0!important;padding:16px!important;border:1px solid #dce6d8!important;border-radius:15px!important}.task-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.task-assignment-card h3{margin:9px 0 5px}.task-confirmed{margin-top:11px;font-weight:700;color:#366e4c;font-size:.85rem}.task-finished{background:#f4f7f1!important}.task-card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.task-card-actions:empty{display:none}.task-card-actions button{min-height:42px}#taskAssigneeFields{background:#f3f7ee;border:1px solid #e3ebdc;padding:12px;border-radius:12px;margin-top:12px}
-.task-nav-count{display:inline-block;background:#d8ece0;color:#265d44;border-radius:999px;padding:2px 6px;font-size:.72rem;font-weight:750;vertical-align:middle}
+.task-status-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px;background:#f0f2e9;border:1px solid #dde6d8;border-radius:15px;margin:4px 0 19px}.task-status-switch button{min-height:48px;border-radius:11px;background:transparent;color:#506656;box-shadow:none;border:0;font-weight:750;touch-action:manipulation}.task-status-switch button.selected{background:#fffdf8;color:#315b40;box-shadow:0 2px 8px #394e3520}.task-status-switch button span{display:inline-block;background:#dfeadf;border-radius:100px;padding:1px 8px;margin-left:4px}.task-empty{text-align:center;padding:34px 16px;border:1px dashed #cdd9c9;border-radius:16px;background:#f9faf6}.task-detail-actions button.danger{background:#fff1ed;color:#a42d27;border:1px solid #f0c8c0}.task-nav-count{display:inline-block;background:#d8ece0;color:#265d44;border-radius:999px;padding:2px 6px;font-size:.72rem;font-weight:750;vertical-align:middle}
 
 /* v3.6: grosse, fingertaugliche Aufgabendetails */
 .task-assignment-card{cursor:pointer;position:relative;min-height:112px;transition:border-color .15s,box-shadow .15s}
@@ -235,6 +235,7 @@ $('moreView').addEventListener('click',event=>{
  window.scrollTo({top:0,behavior:'auto'});
 });
 let openedTaskId=null;
+let taskListStatus='open'; // open | done
 const niceTaskDate=v=>v?new Intl.DateTimeFormat('de-CH',{day:'2-digit',month:'long',year:'numeric'}).format(new Date(v+'T12:00:00')):'Kein Datum festgelegt';
 const niceTaskMoment=v=>v?new Date(v).toLocaleString('de-CH',{dateStyle:'medium',timeStyle:'short'}):'';
 function taskFeedback(message='',isError=false){const box=$('taskDetailFeedback');box.textContent=message;box.className=message?(isError?'task-error':'task-success'):'hidden';}
@@ -246,7 +247,7 @@ function openTaskDetail(taskId){
  $('taskDetailStatus').textContent=t.done?'✓ Erledigt':t.task_postpone_reason?'↪ Verschoben':'○ Offen';
  const field=(label,val)=>`<div class="task-detail-field"><small>${label}</small><strong>${escap(val)}</strong></div>`;
  $('taskDetailBody').innerHTML=`${t.description?`<div class="task-detail-description">${escap(t.description)}</div>`:'<p class="muted small">Keine zusätzliche Beschreibung.</p>'}<div class="task-detail-grid">${field('Erstellt von',personName(t.owner_id))}${field('Zugewiesen an',t.assignee_id?personName(t.assignee_id):'Niemanden')}${field('Fällig am',niceTaskDate(t.event_date))}${field('Sichtbarkeit',t.visibility==='private'?'Privat':'Gemeinsam')}</div>${t.task_postpone_reason?`<div class="task-detail-note"><strong>↪ Verschiebung durch ${escap(personName(t.task_postponed_by))}</strong>${t.task_postponed_at?` · ${escap(niceTaskMoment(t.task_postponed_at))}`:''}<div style="margin-top:8px">${escap(t.task_postpone_reason)}</div></div>`:''}${t.done?`<div class="task-confirmed">✓ Erledigt von ${escap(personName(t.completed_by||t.assignee_id||t.owner_id))}${t.completed_at?' am '+escap(niceTaskMoment(t.completed_at)):''}</div>`:''}`;
- $('taskDetailActions').innerHTML=[!t.done&&(mine||unassignedOwner)?`<button type="button" data-task-action="confirm">✓ Aufgabe als erledigt quittieren</button>`:'',mine&&!t.done?`<button type="button" class="btn2" data-task-action="postpone">↪ Verschieben / begründen</button>`:'',owner?`<button type="button" class="btn2" data-task-action="edit">Aufgabe bearbeiten</button>`:'','<button type="button" class="btn2" data-task-action="close">Schliessen</button>'].join('');
+ $('taskDetailActions').innerHTML=[owner?`<button type="button" class="danger" data-task-action="delete">Aufgabe löschen</button>`:'',!t.done&&(mine||unassignedOwner)?`<button type="button" data-task-action="confirm">✓ Aufgabe als erledigt quittieren</button>`:'',mine&&!t.done?`<button type="button" class="btn2" data-task-action="postpone">↪ Verschieben / begründen</button>`:'',owner?`<button type="button" class="btn2" data-task-action="edit">Aufgabe bearbeiten</button>`:'','<button type="button" class="btn2" data-task-action="close">Schliessen</button>'].join('');
  if(!t.done&&t.assignee_id&&!mine){$('taskDetailBody').insertAdjacentHTML('beforeend','<p class="task-help">Diese Aufgabe ist einer anderen Person zugewiesen. Nur sie kann die Erledigung quittieren. Sobald sie das macht, siehst du hier die Bestätigung.</p>');}
  if(!t.done&&!t.assignee_id&&!owner){$('taskDetailBody').insertAdjacentHTML('beforeend','<p class="task-help">Diese Aufgabe ist nicht an dich zugewiesen. Die Person, die sie erstellt hat, kann sie erledigen oder dir zuweisen.</p>');} 
  $('taskPostponeForm').classList.add('hidden');$('taskPostponeForm').reset();
@@ -263,6 +264,18 @@ $('taskDetailActions').onclick=async ev=>{
  const a=button.dataset.taskAction;
  if(a==='close'){closeTaskDetail();return;}
  if(a==='edit'){if(t.owner_id!==user.id)return;closeTaskDetail();openEditor(t);return;}
+ if(a==='delete'){
+  if(t.owner_id!==user.id)return taskFeedback('Nur die Person, die die Aufgabe erstellt hat, darf sie löschen.',true);
+  if(!confirm('Aufgabe „'+t.title+'“ wirklich dauerhaft löschen? Diese Aktion kann nicht rückgängig gemacht werden.'))return;
+  button.disabled=true;taskFeedback('Aufgabe wird gelöscht …');
+  try{
+   const {data,error}=await sb.from('entries').delete().eq('id',t.id).eq('kind','task').eq('owner_id',user.id).select('id');
+   if(error)throw error;
+   if(!data||data.length===0)throw new Error('Löschen nicht erlaubt oder Aufgabe nicht gefunden. Prüfe die Berechtigungen in Supabase.');
+   closeTaskDetail();items=items.filter(x=>x.id!==t.id);render();msg('Aufgabe gelöscht.');await load();
+  }catch(e){taskFeedback('Löschen fehlgeschlagen: '+(e?.message||String(e)),true);button.disabled=false;}
+  return;
+ }
  if(t.done)return;
  if(a==='postpone'&&t.assignee_id!==user.id)return;
  if(a==='postpone'){$('taskDetailActions').classList.add('hidden');$('taskPostponeForm').classList.remove('hidden');$('taskPostponeReason').focus();return;}
@@ -296,20 +309,23 @@ $('taskPostponeForm').onsubmit=async ev=>{
 };
 function renderTaskList(){
  const tasks=items.filter(i=>i.kind==='task');
+ const openCount=tasks.filter(t=>!t.done).length,doneCount=tasks.filter(t=>t.done).length;
+ const shown=tasks.filter(t=>taskListStatus==='done'?t.done:!t.done);
  const groups=[
-  ['📥 Mir zugewiesen',tasks.filter(t=>t.assignee_id===user.id)],
-  ['📤 Von mir vergeben',tasks.filter(t=>t.owner_id===user.id&&t.assignee_id&&t.assignee_id!==user.id)],
-  ['📝 Weitere Aufgaben',tasks.filter(t=>t.assignee_id!==user.id&&!(t.owner_id===user.id&&t.assignee_id&&t.assignee_id!==user.id))]
+  ['📥 Mir zugewiesen',shown.filter(t=>t.assignee_id===user.id)],
+  ['📤 Von mir vergeben',shown.filter(t=>t.owner_id===user.id&&t.assignee_id&&t.assignee_id!==user.id)],
+  ['📝 Weitere Aufgaben',shown.filter(t=>t.assignee_id!==user.id&&!(t.owner_id===user.id&&t.assignee_id&&t.assignee_id!==user.id))]
  ];
  const card=t=>{
-   const assigned=!!t.assignee_id,own=t.owner_id===user.id,mine=t.assignee_id===user.id;
+   const assigned=!!t.assignee_id,mine=t.assignee_id===user.id;
    const status=t.done?'✅ Erledigt':mine?'⏳ Von dir zu erledigen':assigned?'⏳ Wartet auf Bestätigung':'☐ Offen';
    const assignedText=assigned?`Zugewiesen an: <b>${escap(personName(t.assignee_id))}</b>`:'Nicht zugewiesen';
    const confirmed=t.done?`<div class="task-confirmed">✓ Bestätigt von ${escap(personName(t.completed_by||t.assignee_id||t.owner_id))}${t.completed_at?' · '+escap(taskDoneTime(t)):''}</div>`:'';
-   const buttons=[mine&&!t.done?`<button type="button" data-confirm-task="${t.id}">✓ Als erledigt bestätigen</button>`:'',own?`<button type="button" class="btn2" data-edit="${t.id}">Bearbeiten</button><button type="button" class="danger" data-del="${t.id}">Löschen</button>`:''].filter(Boolean).join('');
    return `<article class="entry task-assignment-card ${t.done?'task-finished':''}" data-task-open="${escap(t.id)}" role="button" tabindex="0" aria-label="Aufgabe ${escap(t.title)} öffnen"><div class="task-card-top"><span class="pill">${status}</span><span class="small muted">${t.visibility==='private'?'🔒 Privat':'👥 Gemeinsam'}</span></div><h3>${escap(t.title)}</h3>${t.description?`<p class="small muted">${escap(t.description)}</p>`:''}<div class="small">Erstellt von: <b>${escap(personName(t.owner_id))}</b></div><div class="small">${assignedText}</div>${t.event_date?`<div class="small">📅 ${escap(t.event_date)}</div>`:''}${t.task_postpone_reason?`<div class="small" style="color:#97621b;margin-top:5px">↪ Verschoben: ${escap(t.task_postpone_reason)}</div>`:''}${confirmed}<div class="task-open-hint">${mine&&!t.done?'✓ Antippen zum Quittieren oder Verschieben ›':'Details ansehen ›'}</div></article>`;
  };
- $('entries').innerHTML=groups.map(([heading,list])=>`<section class="task-group"><h3>${heading} <span class="task-count">${list.filter(t=>!t.done).length} offen</span></h3>${list.length?list.sort((a,b)=>Number(a.done)-Number(b.done)||(a.event_date||'9999').localeCompare(b.event_date||'9999')).map(card).join(''):'<p class="muted small">Hier gibt es noch keine Aufgaben.</p>'}</section>`).join('');
+ const switcher=`<div class="task-status-switch" role="group" aria-label="Aufgabenstatus"><button type="button" data-task-status="open" aria-pressed="${taskListStatus==='open'}" class="${taskListStatus==='open'?'selected':''}">Offen <span>${openCount}</span></button><button type="button" data-task-status="done" aria-pressed="${taskListStatus==='done'}" class="${taskListStatus==='done'?'selected':''}">Erledigt <span>${doneCount}</span></button></div>`;
+ const content=groups.filter(([heading,list])=>list.length).map(([heading,list])=>`<section class="task-group"><h3>${heading}</h3>${list.sort((a,b)=>(a.event_date||'9999').localeCompare(b.event_date||'9999')).map(card).join('')}</section>`).join('');
+ $('entries').innerHTML=switcher+(content||`<div class="task-empty"><div style="font-size:2rem">${taskListStatus==='open'?'🌿':'✓'}</div><h3>${taskListStatus==='open'?'Keine offenen Aufgaben':'Noch keine erledigten Aufgaben'}</h3><p class="small muted">${taskListStatus==='open'?'Alle Aufgaben sind erledigt oder es wurden noch keine erstellt.':'Quittierte Aufgaben erscheinen automatisch hier.'}</p></div>`);
 }
 function render(){display('householdOverview',active==='household');display('householdMembersOverview',active==='household');display('sectionCard',active!=='household');display('addBtn',active!=='shopping'&&active!=='household'&&active!=='more');display('moreView',active==='more');display('calendarView',active==='event');display('projectView',active==='project');display('budgetView',active==='finance');display('shoppingView',active==='shopping');display('entries',active!=='event'&&active!=='project'&&active!=='finance'&&active!=='shopping'&&active!=='household'&&active!=='more');if(active==='event')renderCalendar();if(active==='project')renderProjects();if(active==='finance')renderBudget();if(active==='shopping')renderShopping();let nav=$('tabs');
 const navIcons={event:'▦',shopping:'▤',finance:'◉',asset:'◈',task:'✓',project:'▧',note:'✎',household:'♡'};
@@ -350,7 +366,7 @@ $('entryForm').onsubmit=async ev=>{ev.preventDefault();if(!home)return;
  if(error)return err(error);$('editDialog').close();msg('Eintrag gespeichert.');await load();
 };
 $('entries').addEventListener('keydown',ev=>{if(active!=='task'||!['Enter',' '].includes(ev.key)||ev.target.closest('button'))return;const card=ev.target.closest('[data-task-open]');if(card){ev.preventDefault();openTaskDetail(card.dataset.taskOpen);}});
-$('entries').onclick=async ev=>{const card=ev.target.closest('[data-task-open]');if(active==='task'&&card&&!ev.target.closest('button')){openTaskDetail(card.dataset.taskOpen);return;}let btn=ev.target.closest('button');if(!btn)return;let id=btn.dataset.confirmTask||btn.dataset.edit||btn.dataset.del||btn.dataset.share,i=items.find(x=>x.id===id);
+$('entries').onclick=async ev=>{const tab=ev.target.closest('button[data-task-status]');if(active==='task'&&tab){taskListStatus=tab.dataset.taskStatus;renderTaskList();return;}const card=ev.target.closest('[data-task-open]');if(active==='task'&&card&&!ev.target.closest('button')){openTaskDetail(card.dataset.taskOpen);return;}let btn=ev.target.closest('button');if(!btn)return;let id=btn.dataset.confirmTask||btn.dataset.edit||btn.dataset.del||btn.dataset.share,i=items.find(x=>x.id===id);
 if(btn.dataset.confirmTask){if(!i||i.kind!=='task'||i.assignee_id!==user.id||i.done)return;if(!confirm('Aufgabe „'+i.title+'“ als erledigt bestätigen?'))return;const {error}=await sb.rpc('confirm_assigned_task',{p_task_id:i.id});if(error)return err(error);msg('Aufgabe bestätigt. Die erstellende Person sieht jetzt „Erledigt“.');await load();return;}
 if(!i||i.owner_id!==user.id)return;if(btn.dataset.edit){openEditor(i);return;}if(btn.dataset.del){if(!confirm('Eintrag wirklich dauerhaft löschen?'))return;const{error}=await sb.from('entries').delete().eq('id',id);if(error)err(error);else{msg('Eintrag gelöscht.');await load();}return;}
 if(btn.dataset.share){if(i.visibility!=='private'){msg('Dieser Eintrag ist bereits gemeinsam sichtbar. Stelle ihn zuerst auf „Privat“, um eine gezielte Freigabe zu verwenden.');return;}const other=members.find(m=>m.user_id!==user.id);if(!other)return msg('Deine Frau muss zuerst dem Haushalt beitreten.',true);const{data:existing,error:readError}=await sb.from('entry_grants').select('entry_id').eq('entry_id',id).eq('granted_user_id',other.user_id).maybeSingle();if(readError)return err(readError);if(existing){if(!confirm('Private Freigabe für die andere Person widerrufen?'))return;const{error}=await sb.from('entry_grants').delete().eq('entry_id',id).eq('granted_user_id',other.user_id);if(error)err(error);else msg('Freigabe entfernt.');}else{if(!confirm('Diesen privaten Eintrag gezielt mit der anderen Person teilen?'))return;const{error}=await sb.from('entry_grants').insert({entry_id:id,granted_user_id:other.user_id});if(error)err(error);else msg('Eintrag freigegeben.');}await load();}}
